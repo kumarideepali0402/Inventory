@@ -104,13 +104,13 @@ export default  function ReservationClient({reservation}:Props) {
                 </div>
                 )}
 
-                {status === 'PENDING' && (
+                {status === 'PENDING' && timeLeft > 0 && (
                 <div className="flex gap-3">
                     <button onClick={handleCancel} disabled={loading}
                     className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 disabled:opacity-50">
                     Cancel
                     </button>
-                    <button onClick={handleConfirm} disabled={loading}
+                    <button onClick={handleConfirm} disabled={loading || timeLeft<=0}
                     className="flex-1 bg-purple-700 text-white py-2 rounded-lg hover:bg-purple-800 disabled:opacity-50">
                     {loading ? 'Processing...' : 'Confirm Purchase'}
                     </button>
