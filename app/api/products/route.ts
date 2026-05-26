@@ -44,7 +44,9 @@ export async function GET() {
                     warehouse: true
                 }
             }
-        }
+        },
+        orderBy: {createdAt: 'asc'}
+
     })
 
     return NextResponse.json(products, {status: 200})
