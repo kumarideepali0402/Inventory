@@ -4,7 +4,7 @@ An inventory and order-fulfillment platform with race-condition-free reservation
 
 ## Live URL
 
-[Add your Vercel URL here after deployment]
+https://inventory-t9m1.vercel.app/
 
 ## How to Run Locally
 
