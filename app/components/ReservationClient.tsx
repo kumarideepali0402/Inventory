@@ -59,7 +59,7 @@ export default  function ReservationClient({reservation}:Props) {
         const data = await res.json();
 
         if(!res.ok) {
-            setError(data.error)
+            setError(data.message)
         } else {
             setStatus('RELEASED')
             router.refresh()

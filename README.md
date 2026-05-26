@@ -1,6 +1,6 @@
 # Allo Inventory
 
-An inventory and order-fulfillment platform with race-condition-free reservation logic built with Next.js App Router, Prisma, and Neon Postgres.
+An inventory and order-fulfillment platform with race-condition-free reservation logic built with Next.js App Router, Prisma, Neon Postgres, and Zod.
 
 ## Live URL
 
@@ -76,6 +76,7 @@ I initially planned to use `SELECT FOR UPDATE` inside a Prisma transaction, but 
 ## Trade-offs and What I'd Do Differently
 
 - **Expiry:** Used lazy cleanup instead of a background worker to keep deployment simple. Would add a Vercel Cron job in production.
+- **Validation:** Used Zod to validate the `POST /api/reservations` request body — ensures `productId`, `warehouseId`, and `quantity` are present and well-formed before hitting the database.
 - **Idempotency:** Skipped the bonus due to time constraints. Would implement using Redis (Upstash) — store `Idempotency-Key → response` with a 24hr TTL to handle client retries safely.
 - **Authentication:** No auth in this implementation. Would add in production.
 - **Testing:** Manually verified concurrency with simultaneous curl requests. Would add automated integration tests hitting a real test database to catch regressions.
@@ -89,5 +90,6 @@ I initially planned to use `SELECT FOR UPDATE` inside a Prisma transaction, but 
 | Language | TypeScript |
 | ORM | Prisma 7 |
 | Database | Neon (hosted Postgres) |
+| Validation | Zod |
 | Styling | Tailwind CSS |
 | Deploy | Vercel |

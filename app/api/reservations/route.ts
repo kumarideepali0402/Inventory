@@ -1,6 +1,14 @@
 import  {prisma} from"@/lib/prisma"
-
 import { NextResponse, NextRequest } from "next/server"
+import { z } from "zod"
+
+const ReserveSchema = z.object({
+    productId: z.string().min(1),
+    warehouseId: z.string().min(1),
+    quantity: z.number().int().positive()
+
+})
+
 type StockRow = {
     id: string,
     productId: string,
@@ -9,8 +17,13 @@ type StockRow = {
     reservedUnits: number
 }
 export  async function POST (request: NextRequest) {
-    const body = await request.json()
-    const {productId, warehouseId, quantity} = body;
+    const body = await request.json();
+    const parsed = ReserveSchema.safeParse(body)
+    if (!parsed.success) {
+        return NextResponse.json({ error : parsed.error.message}, {status: 400})
+    }
+
+    const { productId, warehouseId, quantity } = parsed.data
     try {
 
             const updated = await prisma.$queryRaw<StockRow[]>`
