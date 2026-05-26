@@ -47,5 +47,5 @@ export async function GET() {
         }
     })
 
-    return NextResponse.json(products)
+    return NextResponse.json(products, {status: 200})
 }
